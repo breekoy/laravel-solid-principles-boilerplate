@@ -2,7 +2,7 @@
 
 namespace App\Shapes;
 
-class Square {
+class Square implements ShapeInterface {
     public $width;
     public $height;
 
@@ -10,5 +10,9 @@ class Square {
     {
         $this->height = $height;
         $this->width = $width;
+    }
+
+    public function area() {
+        return $this->width * $this->height;
     }
 }
