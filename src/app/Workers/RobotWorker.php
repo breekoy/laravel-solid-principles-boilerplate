@@ -2,20 +2,10 @@
 
 namespace App\Workers;
 
-class RobotWorker implements WorkerInterface
+class RobotWorker implements WorkableInterface
 {
     public function work()
     {
         //do work!
-    }
-
-    public function eat()
-    {
-        //???
-    }
-
-    public function sleep()
-    {
-        //???
     }
 }

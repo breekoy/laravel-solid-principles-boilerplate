@@ -2,7 +2,7 @@
 
 namespace App\Workers;
 
-class HumanWorker implements WorkerInterface {
+class HumanWorker implements WorkableInterface, EatableInterface, SleepableInterface {
     public function work() {
         //do work!
     }
