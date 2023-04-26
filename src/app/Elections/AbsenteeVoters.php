@@ -5,34 +5,28 @@ namespace App\Elections;
 use App\Models\Voter;
 use Exception;
 
-class AbsenteeVoters extends Voters
+class AbsenteeVoters extends Voters implements VoterInterface
 {
-    public function getList($id)
-    {
-        //pre condition
-        if (!is_int($id)) {
-            throw new Exception('$id must be integer.');
+    public function getList (int $id) : array {
+        //get absentee voters list from db
+        $voter_list = Voter::query()
+            ->where('status', 'Absentee')
+            ->where('id', $id)
+            ->get();
+
+        //post condition
+        if (empty($voter_list)) {
+            return [
+                'error' => true,
+                'message' => 'Voter not found!',
+                'data' => []
+            ];
         }
 
-        //get all voters list from db
-        $voter_list = Voter::all();
-
-        //get the voter by id
-        foreach ($voter_list as $voter) {
-            if ($voter->id === $id) {
-                $found_voter = $voter;
-            }
-        }
-
-        //post conditions
-        if (empty($found_voter)) {
-            throw new Exception('Voter not found');
-        }
-
-        if ($found_voter->status !== 'Absentee') {
-            throw new Exception('Voter is not absentee');
-        }
-
-        return $found_voter;
+        return [
+            'error' => false,
+            'message' => 'OK',
+            'data' => $voter_list->toArray()
+        ];
     }
 }

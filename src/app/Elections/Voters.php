@@ -4,8 +4,8 @@ namespace App\Elections;
 
 use Exception;
 
-class Voters {
-    public function getList (int $id) {
+class Voters implements VoterInterface {
+    public function getList (int $id) : array {
         //assuming this array is filled with voters list.
         $voter_list = [
             [
@@ -27,9 +27,17 @@ class Voters {
 
         //post condition
         if (empty($found_voter)) {
-            throw new Exception('Voter not found');
+            return [
+                'error' => true,
+                'message' => 'Voter not found!',
+                'data' => []
+            ];
         }
 
-        return $found_voter;
+        return [
+            'error' => false,
+            'message' => 'OK',
+            'data' => $found_voter
+        ];
     }
 }
